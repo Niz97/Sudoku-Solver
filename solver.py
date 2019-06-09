@@ -12,9 +12,9 @@ board = [
 
 def main():
 	convertBoard()
-	# printBoard()
-	solve(1,8)
-	print(getValue(0,6))
+	print(getValue(6,5))
+	solve(6,5)
+	
 
 
 def printBoard():
@@ -45,10 +45,19 @@ def solve(x,y):
 
 	gridValues = []
 
+	gridX = x // 3
+	gridY = y // 3
 
-	# print(getPossibilities(rowValues, colValues))
+	gridX *= 3
+	gridY *= 3
 
-def getPossibilities(lstA, lstB):
+	for i in range(0,3):
+		for j in range(0,3):
+			gridValues.append(getValue(gridX + i, gridY + j))
+
+	print(getPossibilities(rowValues, colValues, gridValues))
+
+def getPossibilities(lstA, lstB, lstC):
 	# generate list of strings from 1 to 9
 	possibilities = [str(x) for x in range(1,10)]
 
@@ -59,6 +68,8 @@ def getPossibilities(lstA, lstB):
 			possibilities.remove(lstA[i])
 		if lstB[i] in possibilities:
 			possibilities.remove(lstB[i])
+		if lstC[i] in possibilities:
+			possibilities.remove(lstC[i])
 	return possibilities
 
 def getValue(x,y):
