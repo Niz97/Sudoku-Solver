@@ -12,7 +12,7 @@ board = [
 
 def main():
 	convertBoard()
-	print(getValue(6,5))
+	print("Value at position (6,5) is: ", getValue(6,5))
 	solve(6,5)
 	
 
@@ -34,15 +34,18 @@ def convertBoard():
 # checks what numbers exist in a positions
 # respective row, column and 3x3 grid
 def solve(x,y):
+	
 	# row values
 	rowValues = board[y]
-	print("Row:",rowValues)
+	#print("Row:",rowValues)
 
+	# Column values
 	colValues = []
 	for i in range(0,9):
 		colValues.append(board[i][x])
-	print("Col:", colValues)
+	#print("Col:", colValues)
 
+	# Grid values
 	gridValues = []
 
 	gridX = x // 3
@@ -55,7 +58,7 @@ def solve(x,y):
 		for j in range(0,3):
 			gridValues.append(getValue(gridX + i, gridY + j))
 
-	print(getPossibilities(rowValues, colValues, gridValues))
+	print("Valid numbers are: ", getPossibilities(rowValues, colValues, gridValues))
 
 def getPossibilities(lstA, lstB, lstC):
 	# generate list of strings from 1 to 9
@@ -71,6 +74,7 @@ def getPossibilities(lstA, lstB, lstC):
 		if lstC[i] in possibilities:
 			possibilities.remove(lstC[i])
 	return possibilities
+
 
 def getValue(x,y):
 	return board[y][x]
