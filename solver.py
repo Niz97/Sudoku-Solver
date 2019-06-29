@@ -41,7 +41,7 @@ def getPossibilities(x,y):
 	if board[x][y] != ".":
 		return False
 
-	rowValues = board[y]
+	rowValues = board[x]
 
 	colValues = []
 	for i in range(0,9):
