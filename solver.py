@@ -1,3 +1,5 @@
+import copy
+
 board = [
 		["....82.4."],
         [".3......7"],
@@ -11,9 +13,10 @@ board = [
     ]
 
 def main():
+
 	convertBoard()
-	print("Value at position (6,5) is: ", getValue(6,5))
-	solve(6,5)
+	print(board[0][1])
+	print(getPossibilities(0,1))
 	
 
 
@@ -31,50 +34,51 @@ def convertBoard():
 			board[idx] = convertedRow
 
 
-# checks what numbers exist in a positions
-# respective row, column and 3x3 grid
-def solve(x,y):
-	
-	# row values
-	rowValues = board[y]
-	#print("Row:",rowValues)
 
-	# Column values
+			
+def getPossibilities(x,y):
+
+	if board[x][y] != ".":
+		return False
+
+	rowValues = board[y]
+
 	colValues = []
 	for i in range(0,9):
-		colValues.append(board[i][x])
-	#print("Col:", colValues)
+		colValues.append(board[i][y])
+	print(colValues)
 
 	# Grid values
 	gridValues = []
 
-	gridX = x // 3
-	gridY = y // 3
-
-	gridX *= 3
-	gridY *= 3
+	gridX = (x // 3) * 3
+	gridY = (y // 3) * 3
 
 	for i in range(0,3):
 		for j in range(0,3):
 			gridValues.append(getValue(gridX + i, gridY + j))
 
-	print("Valid numbers are: ", getPossibilities(rowValues, colValues, gridValues))
-
-def getPossibilities(lstA, lstB, lstC):
 	# generate list of strings from 1 to 9
 	possibilities = [str(x) for x in range(1,10)]
 
 	# probably better to use sets in the future
 	# https://www.geeksforgeeks.org/python-set-operations-union-intersection-difference-symmetric-difference/ 
 	for i in range(0,9):
-		if lstA[i] in possibilities:
-			possibilities.remove(lstA[i])
-		if lstB[i] in possibilities:
-			possibilities.remove(lstB[i])
-		if lstC[i] in possibilities:
-			possibilities.remove(lstC[i])
+		if rowValues[i] in possibilities:
+			possibilities.remove(rowValues[i])
+		if colValues[i] in possibilities:
+			possibilities.remove(colValues[i])
+		if gridValues[i] in possibilities:
+			possibilities.remove(gridValues[i])
 	return possibilities
 
+def isFull():
+	for row in board:
+		for col in row:
+			if col == ".":
+				return False
+
+	return True
 
 def getValue(x,y):
 	return board[y][x]
