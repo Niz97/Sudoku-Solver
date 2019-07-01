@@ -15,8 +15,13 @@ board = [
 def main():
 
 	convertBoard()
-	print(board[0][1])
-	print(getPossibilities(0,1))
+	printBoard()
+
+	fill()
+
+	print()
+	printBoard()
+	
 	
 
 
@@ -42,11 +47,12 @@ def getPossibilities(x,y):
 		return False
 
 	rowValues = board[x]
+	# print("Row", rowValues)
 
 	colValues = []
 	for i in range(0,9):
 		colValues.append(board[i][y])
-	print(colValues)
+	# print("Col", colValues)
 
 	# Grid values
 	gridValues = []
@@ -56,7 +62,8 @@ def getPossibilities(x,y):
 
 	for i in range(0,3):
 		for j in range(0,3):
-			gridValues.append(getValue(gridX + i, gridY + j))
+			gridValues.append(getValue(gridY + j, gridX + i))
+	# print("Grid", gridValues)
 
 	# generate list of strings from 1 to 9
 	possibilities = [str(x) for x in range(1,10)]
@@ -71,6 +78,26 @@ def getPossibilities(x,y):
 		if gridValues[i] in possibilities:
 			possibilities.remove(gridValues[i])
 	return possibilities
+
+
+def guess(x,y):
+	pos = getPossibilities(x,y)
+	global board
+	
+
+	if pos != False:
+		if len(pos) != 0:
+			print("X,Y", x,y)
+			print(pos)
+			print("Length:", len(pos))	
+			board[x][y] = pos[0]
+	
+def fill():
+	for i in range(0,9):
+		for j in range(0,9):
+			guess(i,j)
+
+
 
 def isFull():
 	for row in board:
